@@ -54,12 +54,15 @@ local pos = get_postion(lines)
 startpos = pos[1][2]
 endpos = pos[2][2]
 local lines = table.concat(lines, "\n"):gsub("\n", "\\n")
-print(lines)
 local formatted_code = formatted_code:gsub("\n", "\\n")
-print(formatted_code)
-local str =  "'<,'>s/" .. lines .. "/" .. formatted_code
+local str =  "'<,'>s/" .. lines .. "/" .. formatted_code .. "/g"
 --local str = startpos .. "," .. endpos .. "s/" .. table.concat(lines, "\n") .. "/" .. formatted_code
 --local str = str:gsub("\n", "\\n")
+print(str)
+vim.cmd(str)
+print(formatted_code)
+local escaped = formatted_code:gsub("\\%x00", "\r\r")
+local str =  "'<,'>s/\\%x00/\r/g"
 print(str)
 vim.cmd(str)
 os.remove(file_name)
@@ -71,4 +74,5 @@ x += 7
 print(x)
 for i in range(5):
     print(i + 4)
+
 ]]--
